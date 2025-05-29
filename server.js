@@ -1,50 +1,38 @@
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose'); // Comentado - No lo necesitamos ahora
 const path = require('path');
-const Visit = require('./models/visitor'); // Cambiamos el nombre para más claridad
+// const Visit = require('./models/visitor'); // Comentado - No lo necesitamos ahora
 
 const app = express();
 const PORT = 80;
 
-// --- Conexión a MongoDB ---
-// ¡Recuerda! Esta URL te la debe dar tu compañero de Base de Datos
-// y debe usar el dominio que configuró tu compañero de DNS.
-// Ejemplo: 'mongodb://mongo.grupo3.com/tallerdb'
+/* --- Conexión a MongoDB (SECCIÓN DESACTIVADA) ---
 const MONGO_URI = 'mongodb+srv://AndresHKMA16:Hakkima2004@cluster0.aqjtsuq.mongodb.net/Redes';
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Conectado a MongoDB'))
     .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
+*/
 
-// Middleware para servir archivos estáticos (el frontend)
+// Middleware para servir archivos estáticos (el frontend desde la carpeta 'public')
 app.use(express.static('public'));
 
-// --- Ruta de API para obtener los datos ---
-// Esta es la única ruta que necesitamos ahora
+// --- Ruta de API para obtener los datos (VERSIÓN MODIFICADA SIN DB) ---
 app.get('/api/data', async (req, res) => {
     try {
-        // Obtenemos la IP del cliente. req.ip puede devolver '::ffff:192.168.0.x'
+        // Obtenemos la IP del cliente.
         let clientIp = req.ip;
 
         // Limpiamos la IP para quedarnos solo con el formato IPv4
-        // Esto soluciona tu duda de las 'ffff'
         if (clientIp.substr(0, 7) === "::ffff:") {
             clientIp = clientIp.substr(7);
         }
 
-        // Buscamos un documento con esa IP y le incrementamos el contador en 1.
-        // Si no existe, lo crea gracias a la opción { upsert: true }.
-        const visit = await Visit.findOneAndUpdate(
-            { ipAddress: clientIp },      // Filtro: encuentra por IP
-            { $inc: { visitCount: 1 } },  // Update: incrementa el contador
-            { new: true, upsert: true }   // Opciones: si no existe, créalo (upsert)
-                                          // y devuelve el documento actualizado (new)
-        );
-
-        // Respondemos con los datos específicos de este visitante
+        // --- SIMULACIÓN DE RESPUESTA ---
+        // En lugar de consultar la base de datos, enviamos datos de prueba.
         res.json({
-            clientIp: visit.ipAddress,
-            visitCount: visit.visitCount
+            clientIp: clientIp,
+            visitCount: 1 // Respondemos con un número fijo
         });
 
     } catch (error) {
@@ -55,5 +43,5 @@ app.get('/api/data', async (req, res) => {
 
 // Inicia el servidor
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Servidor HTTP del Grupo 3 corriendo en el puerto ${PORT}`);
+    console.log(`🚀 Servidor HTTP del Grupo 3 (SIN DB) corriendo en el puerto ${PORT}`);
 });
