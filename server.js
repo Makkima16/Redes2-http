@@ -4,7 +4,7 @@ const path = require('path');
 const Visit = require('./models/visitor'); // Cambiamos el nombre para más claridad
 
 const app = express();
-const PORT = 3000;
+const PORT = 80;
 
 // --- Conexión a MongoDB ---
 // ¡Recuerda! Esta URL te la debe dar tu compañero de Base de Datos
