@@ -10,7 +10,7 @@ const PORT = 80;
 // ¡Recuerda! Esta URL te la debe dar tu compañero de Base de Datos
 // y debe usar el dominio que configuró tu compañero de DNS.
 // Ejemplo: 'mongodb://mongo.grupo3.com/tallerdb'
-const MONGO_URI = 'mongodb://10.10.3.11/27017/Redes';
+const MONGO_URI = 'mongodb://10.10.3.11:21017/Redes';
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Conectado a MongoDB'))
