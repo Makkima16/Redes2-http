@@ -4,7 +4,7 @@ const path = require('path');
 // const Visit = require('./models/visitor'); // Comentado - No lo necesitamos ahora
 
 const app = express();
-const PORT = 80;
+const PORT = 3000;
 
 /* --- Conexión a MongoDB (SECCIÓN DESACTIVADA) ---
 const MONGO_URI = 'mongodb+srv://AndresHKMA16:Hakkima2004@cluster0.aqjtsuq.mongodb.net/Redes';
