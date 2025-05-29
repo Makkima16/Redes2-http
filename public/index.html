@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Taller Grupo 3 - Contador por IP</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; background-color: #f0f2f5; text-align: center; }
+        .container { padding: 40px; border-radius: 10px; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        p { font-size: 1.2rem; color: #555; }
+        span { font-weight: bold; color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Bienvenido a la página del Grupo 3!</h1>
+        <p>Tu dirección IP es: <span id="client-ip">cargando...</span></p>
+        <p>Has visitado esta página <span id="visit-count">...</span> veces.</p>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+
+                document.getElementById('client-ip').textContent = data.clientIp;
+                document.getElementById('visit-count').textContent = data.visitCount;
+            } catch (error) {
+                console.error("Error al cargar los datos:", error);
+                document.getElementById('client-ip').textContent = 'Error';
+                document.getElementById('visit-count').textContent = 'Error';
+            }
+        }
+
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
